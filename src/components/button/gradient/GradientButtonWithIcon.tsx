@@ -18,9 +18,7 @@ export const GradientButtonWithIcon = ({
     <GradientButtonBase disabled={disabled} onClick={onClick}>
         <div className="w-full flex justify-between">
             {children}
-            <span className={`tracking-wider text-xl text-[${colors.white}]`}>
-                {text}
-            </span>
+            <span className="tracking-wider text-xl">{text}</span>
         </div>
     </GradientButtonBase>
 );

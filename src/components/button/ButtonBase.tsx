@@ -10,7 +10,7 @@ interface Props {
 
 export const ButtonBase = ({ disabled, children, onClick }: Props) => (
     <button disabled={disabled} onClick={onClick}>
-        <GradientBorder className="w-[17rem] h-[4rem] p-px flex justify-center items-center rounded-[32px] filter shadow">
+        <GradientBorder className="min-w-[17rem] h-[4rem] p-px flex justify-center items-center rounded-[32px] filter shadow">
             <div className="w-full h-full flex justify-center items-center rounded-[32px] bg-black-500 px-8">
                 {children}
             </div>

@@ -8,15 +8,17 @@ import horizontalLogo from './../../assets/icons/horizontal-logo.png';
 import { formatAddress } from '../../utils/formatAddress';
 import { WalletConnectContext } from '../../context';
 import { GradientButtonWithIcon } from '../button/gradient/GradientButtonWithIcon';
+import { ASSET_ETH, ASSET_LAKE } from '../../constants/assets';
+import { formatValue } from '../../utils/formatValue';
 
 export const Navigation = () => {
-    const { account, activateBrowserWallet } = useContext(WalletConnectContext);
+    const { account, ethBalance, tokenBalance, activateBrowserWallet } =
+        useContext(WalletConnectContext);
 
     const activate = async () => {
         await activateBrowserWallet();
     };
 
-    const balance = '3600 LAKE | 1.2 ETH';
     return (
         <nav className="relative flex flex-wrap items-center justify-between px-8 py-2 bg-black-500">
             <div className="w-full flex flex-wrap items-center justify-between">
@@ -31,7 +33,19 @@ export const Navigation = () => {
                 <div className="flex items-center justify-end">
                     {!!account ? (
                         <>
-                            <Button disabled={true} text={balance}></Button>
+                            <Button
+                                disabled={true}
+                                text={`${formatValue(
+                                    tokenBalance,
+                                    ASSET_LAKE.symbol,
+                                    2,
+                                )} | ${formatValue(
+                                    ethBalance,
+                                    ASSET_ETH.symbol,
+                                    4,
+                                )}`}
+                            ></Button>
+
                             <div className="ml-6">
                                 <ButtonWithIcon
                                     disabled={true}

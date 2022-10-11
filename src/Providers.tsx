@@ -4,14 +4,11 @@ import { DAppProvider } from '@usedapp/core';
 
 import { GlobalStyle } from './providers/GlobalStyle';
 import { WalletConnectProvider } from './providers/WalletConnectProvider';
+import { dappConfig } from './dapp-config';
 
 interface Props {
     children: ReactNode;
 }
-
-const dappConfig = {
-    autoConnect: false,
-};
 
 export const Providers = ({ children }: Props) => (
     <DAppProvider config={dappConfig}>

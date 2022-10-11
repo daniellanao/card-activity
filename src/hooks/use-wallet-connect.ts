@@ -1,7 +1,9 @@
-import { useEthers } from '@usedapp/core';
+import { useEthers, useEtherBalance, useTokenBalance } from '@usedapp/core';
 import { JsonRpcProvider } from '@ethersproject/providers';
 import Web3Modal from 'web3modal';
 import { useState } from 'react';
+import { ASSET_LAKE } from '../constants/assets';
+import { parseBigNumber } from '../utils/parseBigNumber';
 
 type InternalState = {
     loading: boolean;
@@ -16,7 +18,9 @@ const initialState = {
 export type WalletConnectState = {
     loading: boolean;
     active: boolean;
-    account: string | null;
+    account: string | undefined;
+    ethBalance: number;
+    tokenBalance: number;
     library: JsonRpcProvider | undefined;
     error: string | null;
     activateProvider: () => void;
@@ -38,6 +42,12 @@ export const useWalletConnect = () => {
         deactivate,
         activateBrowserWallet,
     } = useEthers();
+
+    const ethBalanceAsBigNumber = useEtherBalance(account);
+    const tokenBalanceAsBigNumber = useTokenBalance(
+        ASSET_LAKE.address,
+        account,
+    );
 
     const getWeb3Modal = () => {
         const providerOptions = {
@@ -92,7 +102,13 @@ export const useWalletConnect = () => {
     return {
         loading: internalState.loading || isLoading,
         active,
-        account: account || null,
+        account,
+        ethBalance: ethBalanceAsBigNumber
+            ? parseBigNumber(ethBalanceAsBigNumber)
+            : 0,
+        tokenBalance: tokenBalanceAsBigNumber
+            ? parseBigNumber(tokenBalanceAsBigNumber)
+            : 0,
         library,
         error: internalState.error || error?.toString() || null,
         activateProvider,

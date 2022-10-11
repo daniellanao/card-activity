@@ -25,4 +25,5 @@ const GradientBackground = styled.div`
     box-shadow: inset 2px 2px 14px rgba(255, 255, 255, 0.46);
     filter: drop-shadow(0px 0px 6px ${colors.purple['600']})
         drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    color: ${colors.white};
 `;
