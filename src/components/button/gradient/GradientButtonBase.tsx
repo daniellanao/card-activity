@@ -10,7 +10,7 @@ interface Props {
 
 export const GradientButtonBase = ({ disabled, children, onClick }: Props) => (
     <button disabled={disabled} onClick={onClick} className="cursor-pointer">
-        <GradientBackground className="w-[17rem] h-[4rem] px-4 flex justify-center items-center rounded-[32px]">
+        <GradientBackground className="w-[17rem] h-[4rem] px-6 flex justify-center items-center rounded-[32px]">
             {children}
         </GradientBackground>
     </button>
