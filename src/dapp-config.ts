@@ -4,11 +4,11 @@ export const dappConfig = {
     autoConnect: false,
     readOnlyChainId: Mainnet.chainId,
     readOnlyUrls: {
-        [Mainnet.chainId]: `https://eth-mainnet.g.alchemy.com/v2/${
-            import.meta.env.VITE_ALCHEMY_ETHEREUM_KEY
+        [Mainnet.chainId]: `https://mainnet.infura.io/v3/${
+            import.meta.env.VITE_INFURA_ID
         }`,
-        [Goerli.chainId]: `https://eth-goerli.g.alchemy.com/v2/${
-            import.meta.env.VITE_ALCHEMY_GOERLI_KEY
+        [Goerli.chainId]: `https://goerli.infura.io/v3/${
+            import.meta.env.VITE_INFURA_ID
         }`,
     },
 };

@@ -12,23 +12,11 @@ import { ASSET_ETH, ASSET_LAKE } from '../../constants/assets';
 import { formatValue } from '../../utils/formatValue';
 
 export const Navigation = () => {
-    const {
-        active,
-        account,
-        ethBalance,
-        tokenBalance,
-        error,
-        activateBrowserWallet,
-    } = useContext(WalletConnectContext);
-
-    useEffect(() => {
-        if (active && !error) {
-            activateBrowserWallet();
-        }
-    }, []);
+    const { account, ethBalance, tokenBalance, activateProvider } =
+        useContext(WalletConnectContext);
 
     const activate = async () => {
-        await activateBrowserWallet();
+        await activateProvider();
     };
 
     return (

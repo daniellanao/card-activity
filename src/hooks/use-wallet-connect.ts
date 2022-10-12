@@ -1,6 +1,7 @@
 import { useEthers, useEtherBalance, useTokenBalance } from '@usedapp/core';
 import { JsonRpcProvider } from '@ethersproject/providers';
 import Web3Modal from 'web3modal';
+import WalletConnectProvider from '@walletconnect/web3-provider/dist/umd/index.min.js';
 import { useEffect, useState } from 'react';
 import { ASSET_LAKE } from '../constants/assets';
 import { parseBigNumber } from '../utils/parseBigNumber';
@@ -63,6 +64,12 @@ export const useWalletConnect = () => {
                     description: 'Connect with the provider in your Browser',
                 },
                 package: null,
+            },
+            walletconnect: {
+                package: WalletConnectProvider,
+                options: {
+                    infuraId: `${import.meta.env.VITE_INFURA_ID}`,
+                },
             },
         };
         const web3Modal = new Web3Modal({
