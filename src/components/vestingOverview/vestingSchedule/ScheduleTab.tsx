@@ -4,6 +4,7 @@ import {
     getCoreRowModel,
     useReactTable,
 } from '@tanstack/react-table';
+
 import { IVestingSchedule } from '../../../interfaces/vestingSchedule.interface';
 import { TabProgressBar } from '../../progressBar/TabProgressBar';
 
@@ -96,73 +97,87 @@ export const ScheduleTab = ({ data }: Props) => {
         getCoreRowModel: getCoreRowModel(),
     });
     return (
-        <table className="w-full">
-            <thead>
-                {table.getHeaderGroups().map((headerGroup) => (
-                    <tr key={headerGroup.id}>
-                        {headerGroup.headers.map((header, index) => (
-                            <th
-                                key={header.id}
-                                className={`tab-border !border-t-0 ${
-                                    index === 0
-                                        ? '!border-l-0'
-                                        : index ===
-                                          headerGroup.headers.length - 1
-                                        ? '!border-r-0'
-                                        : ''
-                                }`}
-                            >
-                                <div className="mx-4 my-2">
-                                    <span className="font-kanit-regular color-gray-gradient text-shadow text-sm tracking-[.1em]">
-                                        {header.isPlaceholder
-                                            ? null
-                                            : flexRender(
-                                                  header.column.columnDef
-                                                      .header,
-                                                  header.getContext(),
-                                              )}
-                                    </span>
-                                </div>
-                            </th>
+        <>
+            {data.length > 0 ? (
+                <table className="w-full">
+                    <thead>
+                        {table.getHeaderGroups().map((headerGroup) => (
+                            <tr key={headerGroup.id}>
+                                {headerGroup.headers.map((header, index) => (
+                                    <th
+                                        key={header.id}
+                                        className={`tab-border !border-t-0 ${
+                                            index === 0
+                                                ? '!border-l-0'
+                                                : index ===
+                                                  headerGroup.headers.length - 1
+                                                ? '!border-r-0'
+                                                : ''
+                                        }`}
+                                    >
+                                        <div className="mx-4 my-2">
+                                            <span className="font-kanit-regular color-gray-gradient text-shadow text-sm tracking-[.1em]">
+                                                {header.isPlaceholder
+                                                    ? null
+                                                    : flexRender(
+                                                          header.column
+                                                              .columnDef.header,
+                                                          header.getContext(),
+                                                      )}
+                                            </span>
+                                        </div>
+                                    </th>
+                                ))}
+                            </tr>
                         ))}
-                    </tr>
-                ))}
-            </thead>
-            <tbody>
-                {table.getRowModel().rows.map((row, rowIndex) => (
-                    <tr key={row.id}>
-                        {row.getVisibleCells().map((cell, cellIndex) => (
-                            <td
-                                key={cell.id}
-                                className={`tab-border ${
-                                    rowIndex ===
-                                    table.getRowModel().rows.length - 1
-                                        ? '!border-b-0'
-                                        : ''
-                                } ${
-                                    cellIndex === 0
-                                        ? '!border-l-0'
-                                        : cellIndex ===
-                                          row.getVisibleCells().length - 1
-                                        ? '!border-r-0'
-                                        : ''
-                                } ${
-                                    !row.getValue('isUnlocked')
-                                        ? 'text-gray-500'
-                                        : ''
-                                }`}
-                            >
-                                <div className="flex flex-col m-4">
-                                    {flexRender(
-                                        cell.column.columnDef.cell,
-                                        cell.getContext(),
-                                    )}
-                                </div>
-                            </td>
+                    </thead>
+                    <tbody>
+                        {table.getRowModel().rows.map((row, rowIndex) => (
+                            <tr key={row.id}>
+                                {row
+                                    .getVisibleCells()
+                                    .map((cell, cellIndex) => (
+                                        <td
+                                            key={cell.id}
+                                            className={`tab-border ${
+                                                rowIndex ===
+                                                table.getRowModel().rows
+                                                    .length -
+                                                    1
+                                                    ? '!border-b-0'
+                                                    : ''
+                                            } ${
+                                                cellIndex === 0
+                                                    ? '!border-l-0'
+                                                    : cellIndex ===
+                                                      row.getVisibleCells()
+                                                          .length -
+                                                          1
+                                                    ? '!border-r-0'
+                                                    : ''
+                                            } ${
+                                                !row.getValue('isUnlocked')
+                                                    ? 'text-gray-500'
+                                                    : ''
+                                            }`}
+                                        >
+                                            <div className="flex flex-col m-4">
+                                                {flexRender(
+                                                    cell.column.columnDef.cell,
+                                                    cell.getContext(),
+                                                )}
+                                            </div>
+                                        </td>
+                                    ))}
+                            </tr>
                         ))}
-                    </tr>
-                ))}
-            </tbody>
-        </table>
+                    </tbody>
+                </table>
+            ) : (
+                <div className="w-full flex justify-center items-center mt-36">
+                    NO VESTING SCHEDULES TO SHOW
+                </div>
+            )}
+        </>
     );
 };

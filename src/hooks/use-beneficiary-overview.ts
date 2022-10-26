@@ -1,8 +1,8 @@
-import { JsonRpcProvider } from '@ethersproject/providers';
 import { Contract } from 'ethers';
+import { IBeneficiaryOverview } from '../interfaces/beneficiaryOverview.interface';
+import { JsonRpcProvider } from '@ethersproject/providers';
 import { VESTING_SCHEDULE_ADDRESS } from '../constants/blockchain';
 import { vestingScheduleAbi } from '../abis/vestingSchedule';
-import { IBeneficiaryOverview } from '../interfaces/beneficiaryOverview.interface';
 
 export const useBeneficiaryOverview = () => {
     const getBeneficiaryOverview = async (
@@ -14,9 +14,13 @@ export const useBeneficiaryOverview = () => {
             vestingScheduleAbi,
             provider,
         );
-        return await vestingScheduleContract.callStatic.getBeneficiaryOverview(
-            account,
-        );
+        try {
+            return await vestingScheduleContract.callStatic.getBeneficiaryOverview(
+                account,
+            );
+        } catch (e) {
+            return [];
+        }
     };
 
     return {
