@@ -1,9 +1,9 @@
 // Should be replaced with Lake Token data (wETH data as example)
 export const ASSET_LAKE = {
-    name: 'Wrapped Ether',
-    symbol: 'WETH',
+    name: 'Data Lake Token',
+    symbol: 'LAKE',
     decimals: 18,
-    image: 'https://s2.coinmarketcap.com/static/img/coins/64x64/2396.png',
+    image: 'https://data-lake.co/wp-content/uploads/2022/07/DL-Logo-Mark-Black.png',
 };
 
 export const ASSET_ETH = {
