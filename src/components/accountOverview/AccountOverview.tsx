@@ -20,7 +20,7 @@ import styled from 'styled-components';
 import { useBeneficiaryOverview } from '../../hooks/use-beneficiary-overview';
 import { useConfig } from '../../hooks/use-config';
 import { useLakePrice } from '../../hooks/use-lake-price';
-import { usePositionsCount } from '../../hooks/use-positions-count';
+import { usePositions } from '../../hooks/use-positions';
 import { useTgeTimestamp } from '../../hooks/use-tge-timestamp';
 import { useTokenBalance } from '@usedapp/core';
 
@@ -64,7 +64,7 @@ export const AccountOverview = () => {
 
     useEffect(() => {
         const fetchData = async (library: JsonRpcProvider, account: string) => {
-            setPositionsCount(await usePositionsCount(library, account));
+            setPositionsCount((await usePositions(library, account)).length);
         };
 
         if (library && account) {
@@ -172,7 +172,7 @@ export const AccountOverview = () => {
                             showDecimals={true}
                         />
                         <AccountMetric
-                            title={'LP POSITIONS'}
+                            title={'ACTIVE LP POSITIONS'}
                             icon={
                                 <img
                                     className="w-[3.5rem] h-[3.5rem]"
