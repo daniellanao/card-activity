@@ -7,27 +7,35 @@ import { GradientButton } from '../../button/gradient/GradientButton';
 import { IPositionDetails } from '../../../interfaces/positionDetails.interface';
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { ProvideLiquidityModal } from './ProvideLiquidityModal';
+import { StakingModal } from './staking/StakingModal';
+import { UnstakingModal } from './staking/UstakingModal';
 import { WalletConnectContext } from '../../../context';
 import { formatValue } from '../../../utils/formatValue';
 import { parseBigNumber } from '../../../utils/parseBigNumber';
 import { useConfig } from '../../../hooks/use-config';
 import { usePositionDetails } from '../../../hooks/use-position-details';
 import { usePositionId } from '../../../hooks/use-position-id';
+import { useStakedBalance } from '../../../hooks/use-staked-balance';
 import { useTokenBalance } from '@usedapp/core';
 import { useUniswap } from '../../../hooks/use-uniswap';
 
 export const ProvideLiquidityWidget = () => {
     const { account, library } = useContext(WalletConnectContext);
     const { lakeAddress, lpTokenAddress } = useConfig();
-    const [isPoolModalOpen, setIsPoolModalOpen] = useState(false);
+    const [isProvideLiquidityModalOpen, setIsProvideLiquidityModalOpen] =
+        useState(false);
+    const [isStakingModalOpen, setIsStakingModalOpen] = useState(false);
+    const [isUnstakingModalOpen, setIsUnstakingModalOpen] = useState(false);
     const [lakeBalance, setLakeBalance] = useState(0);
     const [lpTokenBalance, setLpTokenBalance] = useState(0);
+    const [stakedBalance, setStakedBalance] = useState(0);
     const [positionId, setPositionId] = useState<number | undefined>(undefined);
     const [positionDetails, setPositionDetails] = useState<
         IPositionDetails | undefined
     >(undefined);
     const [isLiquidityRemoving, setIsLiquidityRemoving] = useState(false);
     const [refreshPositionData, setRefreshPositionData] = useState(0);
+    const [refreshStakingData, setRefreshStakingData] = useState(0);
     const lakeBalanceAsBigNumber = useTokenBalance(lakeAddress, account);
     const lpTokenBalanceAsBigNumber = useTokenBalance(lpTokenAddress, account);
 
@@ -48,15 +56,24 @@ export const ProvideLiquidityWidget = () => {
     }, [library, account, refreshPositionData]);
 
     useEffect(() => {
-        setBalances();
-    }, [lakeBalanceAsBigNumber, lpTokenBalanceAsBigNumber]);
+        const fetchData = async (account: string, library: JsonRpcProvider) => {
+            setStakedBalance(await useStakedBalance(library, account));
+        };
 
-    const setBalances = () => {
+        if (library && account) {
+            fetchData(account, library).catch(console.error);
+        }
+    }, [library, account, refreshStakingData]);
+
+    useEffect(() => {
         setLakeBalance(
             lakeBalanceAsBigNumber
                 ? parseBigNumber(lakeBalanceAsBigNumber, ASSET_LAKE.decimals)
                 : 0,
         );
+    }, [lakeBalanceAsBigNumber]);
+
+    useEffect(() => {
         setLpTokenBalance(
             lpTokenBalanceAsBigNumber
                 ? parseBigNumber(
@@ -65,18 +82,32 @@ export const ProvideLiquidityWidget = () => {
                   )
                 : 0,
         );
-    };
+    }, [lpTokenBalanceAsBigNumber]);
 
     const onProvideLiquidityClick = () => {
-        setIsPoolModalOpen(true);
+        setIsProvideLiquidityModalOpen(true);
     };
 
-    const closeModal = () => {
-        setIsPoolModalOpen(false);
+    const closeProvideLiquidityModal = () => {
+        setIsProvideLiquidityModalOpen(false);
     };
-    const onLpTokenStakingClick = () => {
-        console.log('LP TOKEN STAKING');
+
+    const onStakeClick = () => {
+        setIsStakingModalOpen(true);
     };
+
+    const closeStakingModal = () => {
+        setIsStakingModalOpen(false);
+    };
+
+    const onUnstakeClick = async () => {
+        setIsUnstakingModalOpen(true);
+    };
+
+    const closeUnstakingModal = () => {
+        setIsUnstakingModalOpen(false);
+    };
+
     const onRemoveLiquidityClick = async () => {
         if (library && account && positionId && positionDetails) {
             setIsLiquidityRemoving(true);
@@ -100,8 +131,8 @@ export const ProvideLiquidityWidget = () => {
                     {formatValue(lakeBalance, ASSET_LAKE.symbol, 0)} AVAILABLE
                 </span>
                 <ProvideLiquidityModal
-                    isOpen={isPoolModalOpen}
-                    closeModal={closeModal}
+                    isOpen={isProvideLiquidityModalOpen}
+                    closeModal={closeProvideLiquidityModal}
                     refreshPositionData={() => {
                         setRefreshPositionData(new Date().getTime());
                     }}
@@ -112,12 +143,20 @@ export const ProvideLiquidityWidget = () => {
                     size="medium"
                     disabled={false}
                     text="LP TOKEN STAKING"
-                    onClick={onLpTokenStakingClick}
+                    onClick={onStakeClick}
                 />
                 <span className="text-sm tracking-[.1em] my-2">
                     {formatValue(lpTokenBalance, ASSET_LP_TOKEN.symbol, 0)}{' '}
-                    TOKENS AVAILABLE
+                    AVAILABLE
                 </span>
+                <StakingModal
+                    isOpen={isStakingModalOpen}
+                    lpTokenBalance={lpTokenBalance}
+                    closeModal={closeStakingModal}
+                    refreshStakingData={() => {
+                        setRefreshStakingData(new Date().getTime());
+                    }}
+                />
             </div>
             {!!positionId && (
                 <div className="w-full flex flex-col items-center mt-8">
@@ -131,6 +170,28 @@ export const ProvideLiquidityWidget = () => {
                             onClick={onRemoveLiquidityClick}
                         />
                     )}
+                </div>
+            )}
+            {stakedBalance > 0 && (
+                <div className="w-full flex flex-col items-center mt-8">
+                    <Button
+                        size="medium"
+                        disabled={false}
+                        text="LP TOKENS UNSTAKING"
+                        onClick={onUnstakeClick}
+                    />
+                    <span className="text-sm tracking-[.1em] my-2">
+                        {formatValue(stakedBalance, ASSET_LP_TOKEN.symbol, 0)}{' '}
+                        STAKED
+                    </span>
+                    <UnstakingModal
+                        isOpen={isUnstakingModalOpen}
+                        stakedBalance={stakedBalance}
+                        closeModal={closeUnstakingModal}
+                        refreshStakingData={() => {
+                            setRefreshStakingData(new Date().getTime());
+                        }}
+                    />
                 </div>
             )}
         </div>
