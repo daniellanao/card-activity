@@ -25,7 +25,7 @@ export const VestingSchedule = ({ data, isLoading }: Props) => {
                     account ? '' : 'blur-sm'
                 }`}
             >
-                <div className="w-full flex justify-start py-10 px-6">
+                <div className="w-full flex justify-start py-12 px-6">
                     <div className="font-kanit-medium color-gray-gradient text-shadow text-xl tracking-[.12em]">
                         YOUR $LAKE VESTING SCHEDULE
                     </div>

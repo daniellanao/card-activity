@@ -59,11 +59,11 @@ export const Navigation = () => {
     };
 
     return (
-        <nav className="relative flex flex-wrap items-center justify-between px-8 py-2 bg-black-500">
+        <nav className="relative flex flex-wrap items-center justify-between px-8 py-3 bg-black-500 border-b border-gray-700">
             <div className="w-full flex flex-wrap items-center justify-between">
                 <div>
                     <img
-                        className="w-[24rem] pl-8"
+                        className="w-[22rem] pl-6"
                         src={horizontalLogo}
                         alt="logo"
                     ></img>
@@ -86,7 +86,7 @@ export const Navigation = () => {
                                 )}`}
                             ></Button>
 
-                            <div className="ml-6">
+                            <div className="ml-4">
                                 <ButtonWithIcon
                                     size="big"
                                     disabled={true}
@@ -101,14 +101,14 @@ export const Navigation = () => {
                                     </CopyToClipboard>
                                 </ButtonWithIcon>
                             </div>
-                            <div className="ml-6">
+                            <div className="ml-4">
                                 <button onClick={deactivate}>
                                     <GradientBorder className="p-px flex justify-center items-center rounded-[32px]">
                                         <div className="w-full h-full flex justify-center items-center rounded-[32px] bg-black-500 p-2">
                                             <img
                                                 className="cursor-pointer"
                                                 src={cancelIcon}
-                                                alt="copy"
+                                                alt="cancel"
                                             ></img>
                                         </div>
                                     </GradientBorder>

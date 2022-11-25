@@ -52,7 +52,7 @@ export const Widgets = () => {
     };
 
     return (
-        <div className="w-full h-full bg-black-700 rounded-[30px] inset-shadow relative">
+        <div className="w-full h-full bg-black-700 rounded-[42px] inset-shadow relative">
             <div
                 className={`w-full h-full flex flex-col items-center px-20 pt-12 ${
                     account ? '' : 'blur-sm'
@@ -60,7 +60,7 @@ export const Widgets = () => {
             >
                 <div className="w-full flex justify-between">
                     {widgets.map((widget, index) => (
-                        <div key={index} className="flex flex-col w-[31%]">
+                        <div key={index} className="flex flex-col w-[32%]">
                             {widget.isOpen ? (
                                 <GradientButton
                                     size="huge"

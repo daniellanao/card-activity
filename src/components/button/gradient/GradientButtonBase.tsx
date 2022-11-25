@@ -20,12 +20,12 @@ export const GradientButtonBase = ({
         <GradientBackground
             className={`${
                 size === 'small'
-                    ? 'w-[12rem] h-[3rem] px-2'
+                    ? 'min-w-[12rem] h-[3rem] px-2'
                     : size === 'medium'
-                    ? 'w-[14rem] h-[3rem] px-4'
+                    ? 'min-w-[14rem] h-[3rem] px-6'
                     : size === 'big'
-                    ? 'w-[17rem] h-[4rem] px-6'
-                    : 'min-w-[18rem] h-[6rem] px-6 rounded-[44px]'
+                    ? 'min-w-[17rem] h-[4rem] px-6'
+                    : 'min-w-[18rem] h-[5.5rem] px-6 rounded-[44px]'
             } flex justify-center items-center rounded-[32px]`}
         >
             {children}
@@ -40,7 +40,7 @@ const GradientBackground = styled.div`
         ${colors.blue['900']}
     );
     box-shadow: inset 2px 2px 14px rgba(255, 255, 255, 0.46);
-    filter: drop-shadow(0px 0px 6px ${colors.purple['600']})
+    filter: drop-shadow(0px 0px 4px ${colors.purple['600']})
         drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
     color: ${colors.white};
 `;

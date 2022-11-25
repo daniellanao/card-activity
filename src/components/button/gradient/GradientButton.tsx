@@ -19,7 +19,7 @@ export const GradientButton = ({ size, disabled, text, onClick }: Props) => (
                         ? 'text-base'
                         : size === 'big'
                         ? 'text-xl'
-                        : 'text-2xl'
+                        : 'text-2xl tracking-[.15em]'
                 }`}
             >
                 {text}

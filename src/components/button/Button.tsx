@@ -11,14 +11,14 @@ interface Props {
 export const Button = ({ size, disabled, text, onClick }: Props) => (
     <ButtonBase size={size} disabled={disabled} onClick={onClick}>
         <span
-            className={`color-gradient-light tracking-[.1em] ${
+            className={`color-gradient-light tracking-[.05em] font-medium font-kanit-medium ${
                 size === 'small'
                     ? 'text-xs'
                     : size === 'medium'
                     ? 'text-base'
                     : size === 'big'
                     ? 'text-xl'
-                    : 'text-2xl font-medium font-kanit-medium'
+                    : 'text-2xl tracking-[.15em]'
             }`}
         >
             {text}
