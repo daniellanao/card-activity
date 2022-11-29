@@ -1,12 +1,12 @@
 import { CurrencyAmount, Percent } from '@uniswap/sdk-core';
 import { NonfungiblePositionManager, Position } from '@uniswap/v3-sdk';
 
+import { ASSET_LAKE } from '../constants/assets';
 import { IPositionDetails } from '../interfaces/positionDetails.interface';
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { useConfig } from './use-config';
-import { useLakeToken } from './use-lake-token';
+import { useToken } from './use-token';
 import { useUniswapPool } from './use-uniswap-pool';
-import { useUsdtToken } from './use-usdt-token';
 
 export const useRemoveLiquidity = async (
     provider: JsonRpcProvider,
@@ -17,8 +17,12 @@ export const useRemoveLiquidity = async (
     percentage: number,
 ): Promise<void> => {
     try {
-        const { nonfungiblePositionManagerAddress } = useConfig();
-        const pool = await useUniswapPool(provider);
+        const { nonfungiblePositionManagerAddress, lakeAddress } = useConfig();
+        const pool = await useUniswapPool(
+            provider,
+            positionDetails.tokenAddress,
+            lakeAddress,
+        );
         const position = new Position({
             pool,
             liquidity: positionDetails.liquidity,
@@ -41,11 +45,14 @@ export const useRemoveLiquidity = async (
                 deadline,
                 collectOptions: {
                     expectedCurrencyOwed0: CurrencyAmount.fromRawAmount(
-                        useUsdtToken(),
+                        useToken(
+                            positionDetails.tokenAddress,
+                            positionDetails.tokenSymbol,
+                        ),
                         0,
                     ),
                     expectedCurrencyOwed1: CurrencyAmount.fromRawAmount(
-                        useLakeToken(),
+                        useToken(lakeAddress, ASSET_LAKE.symbol),
                         0,
                     ),
                     recipient: account,

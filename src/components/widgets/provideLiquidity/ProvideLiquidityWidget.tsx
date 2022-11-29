@@ -25,9 +25,7 @@ export const ProvideLiquidityWidget = () => {
         useState(false);
     const [refreshPositions, setRefreshPositions] = useState(0);
     const [lakeBalance, setLakeBalance] = useState(0);
-    const [usdtBalance, setUsdtBalance] = useState(0);
     const lakeBalanceAsBigNumber = useTokenBalance(lakeAddress, account);
-    const usdtBalanceAsBigNumber = useTokenBalance(usdtAddress, account);
 
     useEffect(() => {
         const fetchData = async (account: string, library: JsonRpcProvider) => {
@@ -49,14 +47,6 @@ export const ProvideLiquidityWidget = () => {
         );
     }, [lakeBalanceAsBigNumber]);
 
-    useEffect(() => {
-        setUsdtBalance(
-            usdtBalanceAsBigNumber
-                ? parseBigNumber(usdtBalanceAsBigNumber, ASSET_USDT.decimals)
-                : 0,
-        );
-    }, [usdtBalanceAsBigNumber]);
-
     return (
         <div className="w-full flex flex-col items-center mt-10 mb-4">
             <div className="w-full flex flex-col items-center">
@@ -76,7 +66,6 @@ export const ProvideLiquidityWidget = () => {
                     isLoading={arePositionsLoading}
                     positions={positions}
                     lakeBalance={lakeBalance}
-                    usdtBalance={usdtBalance}
                     closeModal={() => {
                         setIsProvideLiquidityModalOpen(false);
                     }}

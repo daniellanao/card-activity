@@ -16,7 +16,7 @@ import lockOpenIcon from '../../assets/icons/lock-open-icon.svg';
 import { parseBigNumber } from '../../utils/parseBigNumber';
 import { useBeneficiaryOverview } from '../../hooks/use-beneficiary-overview';
 import { useConfig } from '../../hooks/use-config';
-import { useLakePrice } from '../../hooks/use-lake-price';
+import { useLakeUsdtPrice } from '../../hooks/use-lake-usdt-price';
 import { usePositions } from '../../hooks/use-positions';
 import { useTgeTimestamp } from '../../hooks/use-tge-timestamp';
 import { useTokenBalance } from '@usedapp/core';
@@ -37,7 +37,7 @@ export const AccountOverview = () => {
 
     useEffect(() => {
         const fetchData = async (library: JsonRpcProvider) => {
-            setLakePrice(await useLakePrice(library));
+            setLakePrice(await useLakeUsdtPrice(library));
         };
 
         if (library) {

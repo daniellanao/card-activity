@@ -1,5 +1,4 @@
-import { ASSET_LAKE, ASSET_USDT } from '../../../constants/assets';
-
+import { ASSET_LAKE } from '../../../constants/assets';
 import { GradientBorder } from '../../GradientBorder';
 import { IPositionDetails } from '../../../interfaces/positionDetails.interface';
 import { formatValue } from '../../../utils/formatValue';
@@ -34,8 +33,8 @@ export const Position = ({ position, disabled, onClick }: Props) => (
                             {formatValue(position.lakeAmount, '', 2)}
                         </span>
                         <span>
-                            {ASSET_USDT.symbol}:{' '}
-                            {formatValue(position.usdtAmount, '', 2)}
+                            {position.tokenSymbol}:{' '}
+                            {formatValue(position.tokenAmount, '', 2)}
                         </span>
                     </div>
                     <div className="w-full flex flex-col color-gradient-light tracking-[.1em] text-xs">
@@ -43,7 +42,9 @@ export const Position = ({ position, disabled, onClick }: Props) => (
                         <span className="font-kanit-medium font-normal text-sm">
                             {position.lowerPrice} - {position.upperPrice}
                         </span>
-                        <span>LAKE PER USDT</span>
+                        <span>
+                            {ASSET_LAKE.symbol} PER {position.tokenSymbol}
+                        </span>
                     </div>
                 </div>
             </div>

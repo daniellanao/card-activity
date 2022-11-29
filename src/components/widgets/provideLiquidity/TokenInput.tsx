@@ -1,10 +1,12 @@
-import { ASSET_USDT } from '../../../constants/assets';
+import { ASSET_ETH, ASSET_USDT } from '../../../constants/assets';
+
+import ethLogo from './../../../assets/icons/eth-logo.svg';
 import { formatValue } from '../../../utils/formatValue';
 import lakeLogo from './../../../assets/icons/lake-logo.svg';
 import usdtLogo from './../../../assets/icons/usdt-logo.svg';
 
 type Props = {
-    tokenSymbol: string;
+    tokenSymbol?: string;
     tokenPrice?: number;
     inputValue: number;
     isValueValid?: boolean;
@@ -32,7 +34,11 @@ export const TokenInput = ({
                 <img
                     className="w-[2.5rem] h-[2.5rem]"
                     src={
-                        tokenSymbol === ASSET_USDT.symbol ? usdtLogo : lakeLogo
+                        tokenSymbol === ASSET_USDT.symbol
+                            ? usdtLogo
+                            : tokenSymbol === ASSET_ETH.symbol
+                            ? ethLogo
+                            : lakeLogo
                     }
                     alt="chart"
                 ></img>
