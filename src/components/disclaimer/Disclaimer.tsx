@@ -58,6 +58,8 @@ export const Disclaimer = ({ onAcceptClick }: Props) => {
                                 <Link
                                     className="font-medium font-kanit-medium"
                                     to="/terms-and-conditions"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                 >
                                     Terms & Conditions
                                 </Link>{' '}
@@ -65,6 +67,8 @@ export const Disclaimer = ({ onAcceptClick }: Props) => {
                                 <Link
                                     className="font-medium font-kanit-medium"
                                     to="/privacy-policy"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                 >
                                     Privacy Policy
                                 </Link>
@@ -83,6 +87,8 @@ export const Disclaimer = ({ onAcceptClick }: Props) => {
                                 <Link
                                     className="font-medium font-kanit-medium"
                                     to="/terms-and-conditions"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                 >
                                     INFORMATION ABOUT THE RISKS ASSOCIATED WITH
                                     THE PROVISION OF SERVICES
