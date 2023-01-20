@@ -60,10 +60,10 @@ export const Navigation = () => {
 
     return (
         <nav className="relative flex flex-wrap items-center justify-between py-3">
-            <div className="w-full flex flex-wrap items-center justify-between">
+            <div className="w-full flex items-center justify-between">
                 <div>
                     <img
-                        className="w-[18rem]"
+                        className="w-[35vw] lg:w-[18rem]"
                         src={horizontalLogo}
                         alt="logo"
                     ></img>
@@ -72,19 +72,21 @@ export const Navigation = () => {
                 <div className="flex items-center justify-end">
                     {account ? (
                         <>
-                            <Button
-                                size="medium"
-                                disabled={true}
-                                text={`${formatValue(
-                                    lakeBalance,
-                                    ASSET_LAKE.symbol,
-                                    2,
-                                )} | ${formatValue(
-                                    ethBalance,
-                                    ASSET_ETH.symbol,
-                                    4,
-                                )}`}
-                            ></Button>
+                            <div className="hidden lg:block">
+                                <Button
+                                    size="medium"
+                                    disabled={true}
+                                    text={`${formatValue(
+                                        lakeBalance,
+                                        ASSET_LAKE.symbol,
+                                        2,
+                                    )} | ${formatValue(
+                                        ethBalance,
+                                        ASSET_ETH.symbol,
+                                        4,
+                                    )}`}
+                                ></Button>
+                            </div>
 
                             <div className="ml-4">
                                 <CopyToClipboard text={account}>
@@ -94,20 +96,20 @@ export const Navigation = () => {
                                         text={formatAddress(account)}
                                     >
                                         <img
-                                            className="cursor-pointer"
+                                            className="w-4 lg:w-auto cursor-pointer"
                                             src={copyIcon}
                                             alt="copy"
                                         ></img>
                                     </ButtonWithIcon>
                                 </CopyToClipboard>
                             </div>
-                            <div className="ml-4">
+                            <div className="ml-2 lg:ml-4">
                                 <button
                                     className="hover:scale-105 cursor-pointer transition-transform duration-300"
                                     onClick={deactivate}
                                 >
-                                    <GradientBorder className="p-px flex justify-center items-center rounded-[32px]">
-                                        <div className="w-full h-full flex justify-center items-center rounded-[32px] bg-black-500 p-2">
+                                    <GradientBorder className="p-px flex justify-center items-center rounded-[32px] min-w-[2rem]">
+                                        <div className="w-full h-full flex justify-center items-center rounded-[32px] bg-black-500 p-1 lg:p-2">
                                             <img
                                                 className="cursor-pointer"
                                                 src={cancelIcon}
@@ -125,7 +127,11 @@ export const Navigation = () => {
                             text="CONNECT WALLET"
                             onClick={activate}
                         >
-                            <img src={keyIcon} alt="key"></img>
+                            <img
+                                className="w-4 lg:w-auto"
+                                src={keyIcon}
+                                alt="key"
+                            ></img>
                         </GradientButtonWithIcon>
                     )}
                 </div>
