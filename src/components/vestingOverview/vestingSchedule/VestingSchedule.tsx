@@ -2,6 +2,7 @@ import { ClipLoader } from 'react-spinners';
 import { ConnectWallet } from '../../connectWallet/ConnectWallet';
 import { IVestingSchedule } from '../../../interfaces/vestingSchedule.interface';
 import { ScheduleTab } from './ScheduleTab';
+import { SchedulesList } from './SchedulesList/SchedulesList';
 import { WalletConnectContext } from '../../../context';
 import { colors } from '../../../constants/colors';
 import { useContext } from 'react';
@@ -14,14 +15,14 @@ interface Props {
 export const VestingSchedule = ({ data, isLoading }: Props) => {
     const { account } = useContext(WalletConnectContext);
     return (
-        <div className="w-full h-full bg-black-700 rounded-[30px] inset-shadow relative">
+        <div className="w-full h-full min-h-[80vh] lg:min-h-0 bg-black-700 rounded-[30px] inset-shadow relative">
             <div
                 className={`w-full h-full flex flex-col items-center px-4 ${
                     account ? '' : 'blur-sm pointer-events-none'
                 }`}
             >
-                <div className="w-full flex justify-start py-12 px-6">
-                    <div className="font-kanit-medium color-gray-gradient text-shadow text-xl tracking-[.12em]">
+                <div className="w-full flex justify-start py-12 lg:px-6">
+                    <div className="w-full lg:w-auto text-center lg:text-start font-kanit-medium color-gray-gradient text-shadow text-xl tracking-[.12em]">
                         YOUR $LAKE VESTING SCHEDULE
                     </div>
                 </div>
@@ -31,7 +32,14 @@ export const VestingSchedule = ({ data, isLoading }: Props) => {
                             <ClipLoader color={colors.gray['300']} loading />
                         </div>
                     ) : (
-                        <ScheduleTab data={data} />
+                        <>
+                            <div className="hidden lg:flex">
+                                <ScheduleTab data={data} />
+                            </div>
+                            <div className="flex lg:hidden">
+                                <SchedulesList data={data} />
+                            </div>
+                        </>
                     )}
                 </div>
             </div>
