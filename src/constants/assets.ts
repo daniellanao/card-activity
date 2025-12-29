@@ -19,6 +19,18 @@ export const ASSET_DAI: IAsset = {
     decimals: 6,
 };
 
+export const ASSET_USDC: IAsset = {
+    name: 'USD Coin',
+    symbol: 'USDC',
+    decimals: 6,
+};
+
+export const ASSET_USDT: IAsset = {
+    name: 'Tether USD',
+    symbol: 'USDC',
+    decimals: 6,
+};
+
 export const ASSET_WETH: IAsset = {
     name: 'Wrapped Ether',
     symbol: 'WETH',
